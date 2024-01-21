@@ -1,12 +1,15 @@
-import Card from '../../components/card/card';
-import Header from '../../components/header/header';
 import {Link} from 'react-router-dom';
 
+import Header from '../../components/header/header';
+import CardsList from '../../components/cardsList/cardsList';
+
+import type { Offer } from '../../types/types';
+
 type MainProps = {
-  cardsCount: number;
+  offers: Offer[];
 }
 
-function Main({cardsCount = 0}: MainProps): JSX.Element {
+function Main({ offers }: MainProps): JSX.Element {
   return (
     <div className="page page--gray page--main">
       <Header />
@@ -61,16 +64,14 @@ function Main({cardsCount = 0}: MainProps): JSX.Element {
                     <use xlinkHref="#icon-arrow-select" />
                   </svg>
                 </span>
-                <ul className="places__options places__options--custom places__options--opened">
+                {/* <ul className="places__options places__options--custom places__options--opened">
                   <li className="places__option places__option--active" tabIndex={0}>Popular</li>
                   <li className="places__option" tabIndex={0}>Price: low to high</li>
                   <li className="places__option" tabIndex={0}>Price: high to low</li>
                   <li className="places__option" tabIndex={0}>Top rated first</li>
-                </ul>
+                </ul> */}
               </form>
-              <div className="cities__places-list places__list tabs__content">
-                {Array.from({length: cardsCount}, ( _, index) => <Card key={index}/>)}
-              </div>
+              <CardsList offers={offers} />
             </section>
             <div className="cities__right-section">
               <section className="cities__map map" />

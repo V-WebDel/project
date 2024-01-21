@@ -1,3 +1,6 @@
+import {Route, BrowserRouter, Routes} from 'react-router-dom';
+import type { Offer } from '../../types/types';
+
 import Main from '../../pages/main/main';
 import Login from '../../pages/login/login';
 import Favorites from '../../pages/favorites/favorites';
@@ -6,28 +9,27 @@ import NotFound from '../../pages/notfound/notfound';
 import PrivateRoute from '../private-route/private-route';
 
 import {AppRoute, AuthorizationStatus} from '../../const';
-import {Route, BrowserRouter, Routes} from 'react-router-dom';
 
 type AppProps = {
-  cardsCount: number;
+  offers: Offer[];
 }
 
-function App({cardsCount}: AppProps): JSX.Element {
+function App({ offers }: AppProps): JSX.Element {
   return (
     <BrowserRouter>
       <Routes>
-        <Route index element={<Main cardsCount={cardsCount} />}/>
+        <Route index element={<Main offers={offers} />}/>
         <Route path={AppRoute.Login} element={<Login />}/>
+        <Route path={`${AppRoute.Room}/:id`} element={<Property />} />
         <Route path={AppRoute.Lose}
           element={
             <PrivateRoute
               authorizationStatus={AuthorizationStatus.NoAuth}
             >
-              <Favorites />
+              <Favorites offers={offers} />
             </PrivateRoute>
           }
         />
-        <Route path={AppRoute.Room} element={<Property />}/>
         <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>

@@ -1,4 +1,5 @@
 import Header from '../../components/header/header';
+import ReviewsForm from '../../components/reviewsForm/reviewsForm';
 import {Link} from 'react-router-dom';
 
 function Property(): JSX.Element {
@@ -150,7 +151,8 @@ function Property(): JSX.Element {
                     </div>
                   </li>
                 </ul>
-                <form className="reviews__form form" action="#" method="post">
+                <ReviewsForm/>
+                {/* <form className="reviews__form form" action="#" method="post">
                   <label className="reviews__label form__label" htmlFor="review">Your review</label>
                   <div className="reviews__rating-form form__rating">
                     <input className="form__rating-input visually-hidden" name="rating" defaultValue={5} id="5-stars" type="radio" />
@@ -191,7 +193,7 @@ function Property(): JSX.Element {
                     </p>
                     <button className="reviews__submit form__submit button" type="submit" disabled>Submit</button>
                   </div>
-                </form>
+                </form> */}
               </section>
             </div>
           </div>
