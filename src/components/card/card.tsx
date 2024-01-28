@@ -2,11 +2,12 @@ import {Link} from 'react-router-dom';
 import type { Offer } from '../../types/types';
 
 import { AppRoute, MAX_PERCENT_STARS_WIDTH, STARS_COUNT } from '../../const';
+// import { getStarsWidth } from '../../utils';
 
 type CardProps = Offer & {
   onMouseMove?: (id: number) => void;
   onMouseLeave?: () => void;
-  place?: 'cities' | 'favorites';
+  place?: 'cities' | 'favorites' | 'near-places';
 };
 
 function Card({

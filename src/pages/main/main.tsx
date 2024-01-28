@@ -3,13 +3,16 @@ import {Link} from 'react-router-dom';
 import Header from '../../components/header/header';
 import CardsList from '../../components/cardsList/cardsList';
 
-import type { Offer } from '../../types/types';
+import type { City, Offer } from '../../types/types';
+
+import Map from '../../components/map/map';
 
 type MainProps = {
+  city: City;
   offers: Offer[];
 }
 
-function Main({ offers }: MainProps): JSX.Element {
+function Main({ city, offers }: MainProps): JSX.Element {
   return (
     <div className="page page--gray page--main">
       <Header />
@@ -74,7 +77,7 @@ function Main({ offers }: MainProps): JSX.Element {
               <CardsList offers={offers} />
             </section>
             <div className="cities__right-section">
-              <section className="cities__map map" />
+              <Map locations={offers.map((offer) => offer.location)} city={city} />
             </div>
           </div>
         </div>
