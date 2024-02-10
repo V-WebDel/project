@@ -5,7 +5,7 @@ import Login from '../../pages/login/login';
 import Favorites from '../../pages/favorites/favorites';
 import Property from '../../pages/property/property';
 import NotFound from '../../pages/notfound/notfound';
-import PrivateRoute from '../private-route/private-route';
+import PrivateRoute from '../privateRoute/privateRoute';
 import city from '../../mocks/city';
 import offers from '../../mocks/offers';
 import reviews from '../../mocks/reviews';

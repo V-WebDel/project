@@ -1,78 +1,81 @@
+import { CityLocation } from '../const';
 import type { Offer } from '../types/types';
-
 
 const offers: Offer[] = [
   {
     id: 1,
-    price: 350,
-    rating: 4.8,
-    title: 'Stunning & cozy apartment with a view',
+    price: 200,
+    rating: 4.4,
+    title: 'Beautiful & luxurious apartment at great location',
     isPremium: true,
     isFavorite: false,
-    location: {
-      latitude: 52.3909553943508,
-      longitude: 4.85309666406198,
-      zoom: 1
+    location: CityLocation['Amsterdam'],
+    city: {
+      name: 'Amsterdam',
+      location: CityLocation['Amsterdam'],
     },
     previewImage: 'img/apartment-01.jpg',
     type: 'apartment',
+  },
+  {
+    id: 11,
+    price: 400,
+    rating: 5.0,
+    title: 'Beautiful & luxurious apartment at great location',
+    isPremium: true,
+    isFavorite: false,
+    location: CityLocation['Amsterdam'],
     city: {
-      name: 'Amsterdam'
-    }
+      name: 'Amsterdam',
+      location: CityLocation['Amsterdam'],
+    },
+    previewImage: 'img/apartment-01.jpg',
+    type: 'apartment',
   },
   {
     id: 2,
     price: 20,
-    rating: 3.9,
-    title: 'Charming room in the heart of the city',
+    rating: 3.4,
+    title: 'A apartment at great location beautiful',
     isPremium: false,
     isFavorite: false,
-    location: {
-      latitude: 52.369553943508,
-      longitude: 4.85309666406198,
-      zoom: 1
+    location: CityLocation['Paris'],
+    city: {
+      name: 'Paris',
+      location: CityLocation['Paris']
     },
     previewImage: 'img/apartment-02.jpg',
     type: 'room',
-    city: {
-      name: 'Paris'
-    }
   },
   {
     id: 3,
     price: 100,
-    rating: 4.7,
-    title: 'Elegant house with a garden oasis',
+    rating: 5.0,
+    title: 'Great location apartment at great location',
     isPremium: true,
     isFavorite: true,
-    location: {
-      latitude: 52.3909553943508,
-      longitude: 4.929309666406198,
-      zoom: 1
+    location: CityLocation['Cologne'],
+    city: {
+      name: 'Cologne',
+      location: CityLocation['Cologne']
     },
     previewImage: 'img/apartment-03.jpg',
     type: 'house',
-    city: {
-      name: 'Paris'
-    }
   },
   {
     id: 4,
     price: 100,
-    rating: 4.1,
-    title: 'Modern & spacious hotel near the waterfront',
+    rating: 3.2,
+    title: 'Luxurious & beautiful apartment at great location',
     isPremium: false,
     isFavorite: true,
-    location: {
-      latitude: 52.3809553943508,
-      longitude: 4.939309666406198,
-      zoom: 1
+    location: CityLocation['Hamburg'],
+    city: {
+      name: 'Hamburg',
+      location: CityLocation['Hamburg']
     },
     previewImage: 'img/apartment-01.jpg',
     type: 'hotel',
-    city: {
-      name: 'Amsterdam'
-    }
   },
 ];
 
