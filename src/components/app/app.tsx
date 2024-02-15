@@ -6,11 +6,11 @@ import Favorites from '../../pages/favorites/favorites';
 import Property from '../../pages/property/property';
 import NotFound from '../../pages/notfound/notfound';
 import PrivateRoute from '../privateRoute/privateRoute';
-import city from '../../mocks/city';
-import offers from '../../mocks/offers';
-import reviews from '../../mocks/reviews';
+// import city from '../../mocks/city';
+// import offers from '../../mocks/offers';
+// import reviews from '../../mocks/reviews';
 
-import {AppRoute, AuthorizationStatus} from '../../const';
+import { AppRoute, AuthorizationStatus, CityLocation } from '../../const';
 
 
 function App(): JSX.Element {
@@ -19,11 +19,11 @@ function App(): JSX.Element {
       <Routes>
         <Route index element={<Main/>}/>
         <Route path={AppRoute.Login} element={<Login />}/>
-        <Route path={`${AppRoute.Room}/:id`} element={<Property city={city} nearbyOffers={offers} reviews={reviews} />} />
+        <Route path={`${AppRoute.Room}/:id`} element={<Property city={{ name: 'Amsterdam', location: CityLocation.Amsterdam }} nearbyOffers={[]} reviews={[]} />} />
         <Route path={AppRoute.Lose}
           element={
             <PrivateRoute authorizationStatus={AuthorizationStatus.NoAuth}>
-              <Favorites offers={offers} />
+              <Favorites offers={[]} />
             </PrivateRoute>
           }
         />

@@ -4,15 +4,18 @@ import { useState } from 'react';
 
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 import { setSorting } from '../../store/action';
-import { Comparator} from '../../const';
+import { Comparator } from '../../const';
 import Card from '../card/card';
 import Map from '../map/map';
 import SortingList from '../sortingList/sortingList';
+import Spinner from '../spinner/spinner';
+
 
 const CardsList = (): JSX.Element => {
   const dispatch = useAppDispatch();
   const activeSorting = useAppSelector((state) => state.sorting);
   const activeCity = useAppSelector((state) => state.city);
+  const isOffersLoading = useAppSelector((state) => state.isOffersLoading);
   const offers = useAppSelector((state) => state.offers.filter((offer) => offer.city.name === state.city.name).sort(Comparator[state.sorting]));
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [activeOffer, setActiveOffer] = useState<number | null>(null);
@@ -28,6 +31,10 @@ const CardsList = (): JSX.Element => {
   const onSortingChange = (name: SortName) => {
     dispatch(setSorting(name));
   };
+
+  if (isOffersLoading) {
+    return <Spinner />;
+  }
 
   return (
     <>
