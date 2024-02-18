@@ -1,4 +1,4 @@
-import {Route, BrowserRouter, Routes} from 'react-router-dom';
+import { unstable_HistoryRouter as HistoryRouter, Route, Routes } from 'react-router-dom';
 
 import Main from '../../pages/main/main';
 import Login from '../../pages/login/login';
@@ -10,27 +10,26 @@ import PrivateRoute from '../privateRoute/privateRoute';
 // import offers from '../../mocks/offers';
 // import reviews from '../../mocks/reviews';
 
-import { AppRoute, AuthorizationStatus, CityLocation } from '../../const';
+import { AppRoute } from '../../const';
+import history from '../../history';
 
 
-function App(): JSX.Element {
-  return (
-    <BrowserRouter>
-      <Routes>
-        <Route index element={<Main/>}/>
-        <Route path={AppRoute.Login} element={<Login />}/>
-        <Route path={`${AppRoute.Room}/:id`} element={<Property city={{ name: 'Amsterdam', location: CityLocation.Amsterdam }} nearbyOffers={[]} reviews={[]} />} />
-        <Route path={AppRoute.Lose}
-          element={
-            <PrivateRoute authorizationStatus={AuthorizationStatus.NoAuth}>
-              <Favorites offers={[]} />
-            </PrivateRoute>
-          }
-        />
-        <Route path="*" element={<NotFound />} />
-      </Routes>
-    </BrowserRouter>
-  );
-}
+const App = (): JSX.Element => (
+  <HistoryRouter history={history}>
+    <Routes>
+      <Route index element={<Main/>}/>
+      <Route path={AppRoute.Login} element={<Login />}/>
+      <Route path={`${AppRoute.Property}/:id`} element={<Property />} />
+      <Route path={AppRoute.Favorites}
+        element={
+          <PrivateRoute>
+            <Favorites offers={[]} />
+          </PrivateRoute>
+        }
+      />
+      <Route path="*" element={<NotFound />} />
+    </Routes>
+  </HistoryRouter>
+);
 
 export default App;

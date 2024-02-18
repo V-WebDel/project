@@ -1,15 +1,16 @@
+import {Link} from 'react-router-dom';
+
 import Header from '../../components/header/header';
 import Card from '../../components/card/card';
-import {Link} from 'react-router-dom';
 
 import type { Offer } from '../../types/types';
 
-type CardListProps = {
+type FavoritesProps = {
   offers: Offer[];
-};
+}
 
 
-function Favorites({ offers }: CardListProps): JSX.Element {
+function Favorites({ offers }: FavoritesProps): JSX.Element {
 
   const groupedOffersByCity = offers.reduce<{ [key: string]: Offer[] }>((acc, curr) => {
     if (curr.isFavorite) {

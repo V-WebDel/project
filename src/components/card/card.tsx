@@ -1,8 +1,8 @@
-import {Link} from 'react-router-dom';
 import type { Offer } from '../../types/types';
+import { Link } from 'react-router-dom';
 
-import { AppRoute, MAX_PERCENT_STARS_WIDTH, STARS_COUNT } from '../../const';
-// import { getStarsWidth } from '../../utils';
+import { AppRoute } from '../../const';
+import { getStarsWidth } from '../../utils';
 
 type CardProps = Offer & {
   onMouseMove?: (id: number) => void;
@@ -23,7 +23,6 @@ function Card({
   onMouseMove = () => void 0,
   onMouseLeave = () => void 0,
 }: CardProps): JSX.Element {
-
   const handleMouseMove = () => {
     onMouseMove(id);
   };
@@ -65,7 +64,7 @@ function Card({
           <div className="place-card__stars rating__stars">
             <span
               style={{
-                width: `${(MAX_PERCENT_STARS_WIDTH * rating) / STARS_COUNT}%`,
+                width: getStarsWidth(rating),
               }}
             >
             </span>
@@ -73,7 +72,7 @@ function Card({
           </div>
         </div>
         <h2 className="place-card__name">
-          <a href={`${AppRoute.Room}/${id}`}>{title}</a>
+          <a href={`${AppRoute.Property}/${id}`}>{title}</a>
         </h2>
         <p className="place-card__type">{type}</p>
       </div>

@@ -1,7 +1,14 @@
-import axios, { AxiosInstance } from 'axios';
+import axios, { AxiosInstance, AxiosRequestConfig } from 'axios';
+import { Token } from './utils';
 
-const BACKEND_URL = 'https://10.react.pages.academy/six-cities';
+const BACKEND_URL = 'https://10.react.htmlacademy.pro/six-cities';
+// const BACKEND_URL = 'https://10.react.pages.academy/six-cities';
 const REQUEST_TIMEOUT = 5000;
+
+interface Headers {
+  [key: string]: string;
+}
+
 
 export const createAPI = (): AxiosInstance => {
   const api = axios.create({
@@ -9,5 +16,42 @@ export const createAPI = (): AxiosInstance => {
     timeout: REQUEST_TIMEOUT,
   });
 
+  api.interceptors.request.use(
+    (config: AxiosRequestConfig) => {
+      const token = Token.get();
+
+      if (token) {
+        if (!config.headers) {
+          config.headers = {}; // создаем объект headers, если его нет
+        }
+        (config.headers as Headers)['x-token'] = token;
+      }
+
+      return config;
+    },
+  );
+
+
   return api;
 };
+
+// export const createAPI = (): AxiosInstance => {
+//   const api = axios.create({
+//     baseURL: BACKEND_URL,
+//     timeout: REQUEST_TIMEOUT,
+//   });
+
+//   api.interceptors.request.use(
+//     (config: AxiosRequestConfig) => {
+//       const token = Token.get();
+
+//       if (token) {
+//         config.headers['x-token'] = token;
+//       }
+
+//       return config;
+//     },
+//   );
+
+//   return api;
+// };

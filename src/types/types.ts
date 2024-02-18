@@ -19,15 +19,20 @@ export type User = {
   name: string;
   avatarUrl: string;
   isPro: boolean;
-}
+  email: string;
+  token: string;
+};
+
+export type UserAuth = Pick<User, 'email'> & { password: string };
+export type CommentAuth = Pick<Comment, 'comment' | 'rating'> & Pick<Offer, 'id'>
 
 export type Comment = {
-  id: number;
-  comment: string;
-  date: string;
-  rating: number;
-  user: User;
-}
+    id: number;
+    comment: string;
+    date: string;
+    rating: number;
+    user: User;
+};
 
 export type Offer = {
   id: number;
@@ -36,8 +41,14 @@ export type Offer = {
   title: string;
   isPremium: boolean;
   isFavorite: boolean;
+  city: City;
   location: Location;
   previewImage: string;
   type: 'apartment' | 'room' | 'house' | 'hotel';
-  city: City;
+  bedrooms: number;
+  description: string;
+  goods: [string];
+  host: User;
+  images: [string];
+  maxAdults: number;
 };
