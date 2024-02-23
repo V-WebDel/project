@@ -1,12 +1,14 @@
 import Logo from '../logo/logo';
 import { Link } from 'react-router-dom';
+import { memo } from 'react';
 
 import { AppRoute, AuthorizationStatus } from '../../const';
 import { useAppSelector } from '../../hooks/redux';
+import { getAuthorizationStatus, getUser } from '../../store/user-process/selectors';
 
 const Header = () => {
-  const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
-  const user = useAppSelector((state) => state.user);
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
+  const user = useAppSelector(getUser);
 
   return (
     <header className="header">
@@ -44,4 +46,4 @@ const Header = () => {
   );
 };
 
-export default Header;
+export default memo(Header);

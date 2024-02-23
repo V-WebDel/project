@@ -1,4 +1,4 @@
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { useEffect } from 'react';
 
 import ReviewList from '../../components/reviewList/reviewList';
@@ -9,15 +9,17 @@ import { fetchOffer, fetchNearbyOffers, fetchComments, postComment } from '../..
 import Spinner from '../../components/spinner/spinner';
 import { getStarsWidth } from '../../utils';
 import { CommentAuth } from '../../types/types';
+import { getAuthorizationStatus } from '../../store/user-process/selectors';
+import { getComments, getIsOfferLoading, getNearbyOffers, getOffer } from '../../store/site-data/selectors';
 
 const Property = (): JSX.Element | null => {
   const params = useParams();
   const dispatch = useAppDispatch();
-  const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
-  const isOfferLoading = useAppSelector((state) => state.isOfferLoading);
-  const offer = useAppSelector((state) => state.offer);
-  const nearbyOffers = useAppSelector((state) => state.nearbyOffers);
-  const comments = useAppSelector((state) => state.comments);
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
+  const isOfferLoading = useAppSelector(getIsOfferLoading);
+  const offer = useAppSelector(getOffer);
+  const nearbyOffers = useAppSelector(getNearbyOffers);
+  const comments = useAppSelector(getComments);
 
   useEffect(() => {
     const { id } = params;
@@ -29,12 +31,12 @@ const Property = (): JSX.Element | null => {
     }
   }, [params, dispatch]);
 
-  if (!offer) {
-    return null;
-  }
-
   if (isOfferLoading) {
     return <Spinner />;
+  }
+
+  if (!offer) {
+    return null;
   }
 
   const { id, images, isPremium, title, rating, type, bedrooms, maxAdults, price, goods, host, description, city, location } = offer;
@@ -59,17 +61,17 @@ const Property = (): JSX.Element | null => {
             <nav className="header__nav">
               <ul className="header__nav-list">
                 <li className="header__nav-item user">
-                  <a className="header__nav-link header__nav-link--profile" href="#">
+                  <Link className="header__nav-link header__nav-link--profile" to="#">
                     <div className="header__avatar-wrapper user__avatar-wrapper">
                     </div>
                     <span className="header__user-name user__name">Oliver.conner@gmail.com</span>
                     <span className="header__favorite-count">3</span>
-                  </a>
+                  </Link>
                 </li>
                 <li className="header__nav-item">
-                  <a className="header__nav-link" href="#">
+                  <Link className="header__nav-link" to="#">
                     <span className="header__signout">Sign out</span>
-                  </a>
+                  </Link>
                 </li>
               </ul>
             </nav>
