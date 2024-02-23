@@ -4,11 +4,13 @@ import { memo } from 'react';
 
 import { AppRoute, AuthorizationStatus } from '../../const';
 import { useAppSelector } from '../../hooks/redux';
+import { getFavoriteOffers } from '../../store/site-data/selectors';
 import { getAuthorizationStatus, getUser } from '../../store/user-process/selectors';
 
 const Header = () => {
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
   const user = useAppSelector(getUser);
+  const favoriteOffers = useAppSelector(getFavoriteOffers);
 
   return (
     <header className="header">
@@ -29,7 +31,7 @@ const Header = () => {
                     <span className="header__user-name user__name">
                       {user}
                     </span>
-                    <span className="header__favorite-count">3</span>
+                    <span className="header__favorite-count">{favoriteOffers.length}</span>
                   </Link>
                 </li>
               )}

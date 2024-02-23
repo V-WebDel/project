@@ -6,9 +6,6 @@ import Favorites from '../../pages/favorites/favorites';
 import Property from '../../pages/property/property';
 import NotFound from '../../pages/notfound/notfound';
 import PrivateRoute from '../privateRoute/privateRoute';
-// import city from '../../mocks/city';
-// import offers from '../../mocks/offers';
-// import reviews from '../../mocks/reviews';
 
 import { AppRoute } from '../../const';
 import history from '../../history';
@@ -23,7 +20,7 @@ const App = (): JSX.Element => (
       <Route path={AppRoute.Favorites}
         element={
           <PrivateRoute>
-            <Favorites offers={[]} />
+            <Favorites />
           </PrivateRoute>
         }
       />

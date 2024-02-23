@@ -2,17 +2,19 @@ import {Link} from 'react-router-dom';
 
 import Header from '../../components/header/header';
 import Card from '../../components/card/card';
+import Spinner from '../../components/spinner/spinner';
+import { useAppSelector } from '../../hooks/redux';
+import { getFavoriteOffers, getIsFavoriteOffersLoading } from '../../store/site-data/selectors';
 
 import type { Offer } from '../../types/types';
 
-type FavoritesProps = {
-  offers: Offer[];
-}
 
+function Favorites(): JSX.Element {
 
-function Favorites({ offers }: FavoritesProps): JSX.Element {
+  const isFavoriteOffersLoading = useAppSelector(getIsFavoriteOffersLoading);
+  const favoriteOffers = useAppSelector(getFavoriteOffers);
 
-  const groupedOffersByCity = offers.reduce<{ [key: string]: Offer[] }>((acc, curr) => {
+  const groupedOffersByCity = favoriteOffers.reduce<{ [key: string ]: Offer[] }>((acc, curr) => {
     if (curr.isFavorite) {
       const city = curr.city.name;
 
@@ -24,7 +26,11 @@ function Favorites({ offers }: FavoritesProps): JSX.Element {
     }
 
     return acc;
-  }, {} as { [key: string]: Offer[] });
+  }, {});
+
+  if (isFavoriteOffersLoading) {
+    return <Spinner />;
+  }
 
   return (
     <div className="page">
@@ -45,7 +51,6 @@ function Favorites({ offers }: FavoritesProps): JSX.Element {
                   </div>
                   <div className="favorites__places">
                     {groupedOffers.map((offer) => <Card key={offer.id} {...offer} place="favorites" />)}
-
                   </div>
                 </li>
               ))}
