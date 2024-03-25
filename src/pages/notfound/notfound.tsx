@@ -8,7 +8,7 @@ function NotFound(): JSX.Element {
       <main className="page__main page__main--favorites page__main--favorites-empty">
         <div className="page__favorites-container container">
           <section className="favorites favorites--empty" style={{textAlign: 'center'}}>
-            <h1>404 Not Found</h1>
+            <h1>Not Found 404</h1>
             <a href="/">Go to the home page</a>
           </section>
         </div>
