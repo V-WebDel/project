@@ -1,15 +1,13 @@
-import { Link, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { useEffect } from 'react';
 
-import { AppRoute, AuthorizationStatus } from '../../const';
-import { getStarsWidth } from '../../utils';
+import { getStarsWidth, pluralize, capitalize } from '../../utils';
 import { CommentAuth } from '../../types/types';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 import { fetchOffer, fetchNearbyOffers, fetchComments, postComment } from '../../store/action';
-import { getAuthorizationStatus } from '../../store/user-process/selectors';
-import { getComments, getIsOfferLoading, getNearbyOffers, getOffer } from '../../store/site-data/selectors';
+import { getIsAuthorized } from '../../store/user-process/selectors';
+import { getIsOfferLoading, getNearbyOffers, getOffer, getCommentStatus, selectComments } from '../../store/site-data/selectors';
 
-import Logo from '../../components/logo/logo';
 import ReviewList from '../../components/reviewList/reviewList';
 import Map from '../../components/map/map';
 import Card from '../../components/card/card';
@@ -19,11 +17,12 @@ import Bookmark from '../../components/bookmark/bookmark';
 const Property = (): JSX.Element | null => {
   const params = useParams();
   const dispatch = useAppDispatch();
-  const authorizationStatus = useAppSelector(getAuthorizationStatus);
+  const isAuthorized = useAppSelector(getIsAuthorized);
   const isOfferLoading = useAppSelector(getIsOfferLoading);
   const offer = useAppSelector(getOffer);
   const nearbyOffers = useAppSelector(getNearbyOffers);
-  const comments = useAppSelector(getComments);
+  const comments = useAppSelector(selectComments);
+  const commentStatus = useAppSelector(getCommentStatus);
 
   useEffect(() => {
     const { id } = params;
@@ -54,32 +53,6 @@ const Property = (): JSX.Element | null => {
 
   return (
     <div className="page">
-      <header className="header">
-        <div className="container">
-          <div className="header__wrapper">
-            <div className="header__left">
-              <Logo />
-            </div>
-            <nav className="header__nav">
-              <ul className="header__nav-list">
-                <li className="header__nav-item user">
-                  <Link className="header__nav-link header__nav-link--profile" to="#">
-                    <div className="header__avatar-wrapper user__avatar-wrapper">
-                    </div>
-                    <span className="header__user-name user__name">Oliver.conner@gmail.com</span>
-                    <span className="header__favorite-count">3</span>
-                  </Link>
-                </li>
-                <li className="header__nav-item">
-                  <Link className="header__nav-link" to={AppRoute.Login}>
-                    <span className="header__signout">{authorizationStatus === AuthorizationStatus.Auth ? 'Sign out' : 'Sign in'}</span>
-                  </Link>
-                </li>
-              </ul>
-            </nav>
-          </div>
-        </div>
-      </header>
       <main className="page__main page__main--property">
         <section className="property">
           <div className="property__gallery-container container">
@@ -113,13 +86,13 @@ const Property = (): JSX.Element | null => {
               </div>
               <ul className="property__features">
                 <li className="property__feature property__feature--entire">
-                  {type}
+                  {capitalize(type)}
                 </li>
                 <li className="property__feature property__feature--bedrooms">
-                  {bedrooms} Bedrooms
+                  {bedrooms} {pluralize('Bedroom', bedrooms)}
                 </li>
                 <li className="property__feature property__feature--adults">
-                  Max {maxAdults} adults
+                  Max {maxAdults} {pluralize('adult', maxAdults)}
                 </li>
               </ul>
               <div className="property__price">
@@ -155,7 +128,7 @@ const Property = (): JSX.Element | null => {
                   </p>
                 </div>
               </div>
-              <ReviewList reviews={comments} authorizationStatus={authorizationStatus} onSubmit={onFormSubmit} />
+              <ReviewList reviews={comments} isAuthorized={isAuthorized} onSubmit={onFormSubmit} submitStatus={commentStatus} />
             </div>
           </div>
           <Map city={city} locations={locations} activeOffer={id} place="property" />
@@ -164,7 +137,7 @@ const Property = (): JSX.Element | null => {
           <section className="near-places places">
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
             <div className="near-places__list places__list">
-              {nearbyOffers.map((nearbyOffer) => <Card key={nearbyOffer.id} {...nearbyOffer} place="near-places" />)}
+              {nearbyOffers.map((nearbyOffer) => <Card key={nearbyOffer.id} {...nearbyOffer} classPrefix="near-places" />)}
             </div>
           </section>
         </div>

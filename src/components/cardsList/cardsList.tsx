@@ -53,6 +53,7 @@ const CardsList = (): JSX.Element => {
                 {...offer}
                 onMouseMove={handleCardMouseMove}
                 onMouseLeave={handleCardMouseLeave}
+                classPrefix="places"
               />
             ))}
           </div>

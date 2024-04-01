@@ -6,7 +6,9 @@ export const formatDate = (date: string) => {
   return `${months[dateParsed.getMonth()]} ${dateParsed.getFullYear()}`;
 };
 
-export const getStarsWidth = (rating: number) => `${(MAX_PERCENT_STARS_WIDTH * rating) / STARS_COUNT}%`;
+export const getStarsWidth = (rating: number) => `${(MAX_PERCENT_STARS_WIDTH * Math.round(rating)) / STARS_COUNT}%`;
+
+export const getRandomElement = <T>(array: readonly T[]): T => array[Math.floor(Math.random() * array.length)];
 
 export class Token {
   private static _name = 'six-cities-auth-token';
@@ -25,3 +27,7 @@ export class Token {
     localStorage.removeItem(this._name);
   }
 }
+
+export const pluralize = (str: string, count: number) => count === 1 ? str : `${str}s`;
+
+export const capitalize = (str: string) => str.charAt(0).toUpperCase() + str.slice(1);

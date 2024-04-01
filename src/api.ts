@@ -1,4 +1,6 @@
-import axios, { AxiosInstance, AxiosRequestConfig } from 'axios';
+import axios, { AxiosInstance, AxiosRequestConfig, AxiosError } from 'axios';
+import { toast } from 'react-toastify';
+
 import { Token } from './utils';
 
 const BACKEND_URL = 'https://10.react.htmlacademy.pro/six-cities';
@@ -30,27 +32,15 @@ export const createAPI = (): AxiosInstance => {
     },
   );
 
+  api.interceptors.response.use(
+    (response) => response,
+    (error: AxiosError) => {
+      toast.dismiss();
+      // toast.warn(error.response ? error.response.data.error : error.message);
+
+      return Promise.reject(error);
+    }
+  );
 
   return api;
 };
-
-// export const createAPI = (): AxiosInstance => {
-//   const api = axios.create({
-//     baseURL: BACKEND_URL,
-//     timeout: REQUEST_TIMEOUT,
-//   });
-
-//   api.interceptors.request.use(
-//     (config: AxiosRequestConfig) => {
-//       const token = Token.get();
-
-//       if (token) {
-//         config.headers['x-token'] = token;
-//       }
-
-//       return config;
-//     },
-//   );
-
-//   return api;
-// };

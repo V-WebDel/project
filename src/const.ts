@@ -9,6 +9,13 @@ export const MAX_PERCENT_STARS_WIDTH = 100;
 export const URL_MARKER_DEFAULT = 'img/pin.svg';
 export const URL_MARKER_CURRENT = 'img/pin-active.svg';
 
+export const MAX_COMMENTS = 10;
+export const MIN_COMMENT_LENGTH = 50;
+export const MAX_COMMENT_LENGTH = 300;
+
+export const INVALID_PASSWORD_MESSAGE = 'Password should contains at least one letter and digit';
+export const VALID_PASSWORD_REGEXP = /^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9]+)$/;
+
 export enum AppRoute {
   Main = '/',
   Login = '/login',
@@ -20,6 +27,7 @@ export enum AppRoute {
 export enum ApiRoute {
   Offers = '/hotels',
   Login = '/login',
+  Logout = '/logout',
   Comments = '/comments',
   Favorite = '/favorite',
 }
@@ -46,6 +54,13 @@ export enum StoreSlice {
 export enum HttpCode {
   NotFound = 404,
   NoAuth = 401
+}
+
+export enum SubmitStatus {
+  Still = 'STILL',
+  Pending = 'PENDING',
+  Fullfilled = 'FULLFILLED',
+  Rejected = 'REJECTED'
 }
 
 export const Comparator: {

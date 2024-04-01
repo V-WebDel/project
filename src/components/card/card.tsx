@@ -2,18 +2,19 @@ import { memo } from 'react';
 import { Link } from 'react-router-dom';
 
 import type { Offer } from '../../types/types';
-
 import { AppRoute } from '../../const';
-import { getStarsWidth } from '../../utils';
+import { getStarsWidth, capitalize } from '../../utils';
 import Bookmark from '../bookmark/bookmark';
+
 
 type CardProps = Offer & {
   onMouseMove?: (id: number) => void;
   onMouseLeave?: () => void;
-  place?: 'cities' | 'favorites' | 'near-places';
+  isMini?: boolean;
+  classPrefix?: string;
 };
 
-function Card({
+const Card = ({
   id,
   price,
   rating,
@@ -22,18 +23,19 @@ function Card({
   isFavorite,
   previewImage,
   type,
-  place = 'cities',
+  isMini = false,
+  classPrefix = 'cities',
   onMouseMove = () => void 0,
   onMouseLeave = () => void 0,
-}: CardProps): JSX.Element {
-  const handleMouseMove = () => {
+}: CardProps): JSX.Element => {
+  const handleMouseEnter = () => {
     onMouseMove(id);
   };
 
   return (
     <article
-      className={`${place}__place-card place-card`}
-      onMouseMove={handleMouseMove}
+      className={`${classPrefix}__card place-card`}
+      onMouseMove={handleMouseEnter}
       onMouseLeave={onMouseLeave}
     >
       {isPremium && (
@@ -41,16 +43,20 @@ function Card({
           <span>Premium</span>
         </div>
       )}
-      <div className={`${place}__image-wrapper place-card__image-wrapper`}>
-        <Link to="/">
-          <img className="place-card__image" src={previewImage} width="260" height="200" alt="Place image" />
-        </Link>
+      <div className={`${classPrefix}__image-wrapper place-card__image-wrapper`}>
+        <img
+          className="place-card__image"
+          src={previewImage}
+          width={isMini ? 150 : 260}
+          height={isMini ? 110 : 200}
+          alt={title}
+        />
       </div>
       <div className="place-card__info">
         <div className="place-card__price-wrapper">
           <div className="place-card__price">
-            <b className="place-card__price-value">€{price}</b>
-            <span className="place-card__price-text">/&nbsp;night</span>
+            <b className="place-card__price-value">&euro;{price}</b>
+            <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
           <Bookmark id={id} isActive={isFavorite} />
         </div>
@@ -66,12 +72,12 @@ function Card({
           </div>
         </div>
         <h2 className="place-card__name">
-          <a href={`${AppRoute.Property}/${id}`}>{title}</a>
+          <Link to={`${AppRoute.Property}/${id}`}>{title}</Link>
         </h2>
-        <p className="place-card__type">{type}</p>
+        <p className="place-card__type">{capitalize(type)}</p>
       </div>
     </article>
   );
-}
+};
 
 export default memo(Card, (prevProps, nextProps) => prevProps.isFavorite === nextProps.isFavorite);

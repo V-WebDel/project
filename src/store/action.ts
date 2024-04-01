@@ -20,7 +20,8 @@ export const Action = {
   POST_COMMENT: 'offer/post-comment',
   POST_FAVORITE: 'offer/post-favorite',
   LOGIN_USER: 'user/login',
-  FETCH_USER_STATUS: 'user/fetch-status'
+  FETCH_USER_STATUS: 'user/fetch-status',
+  LOGOUT_USER: 'user/logout',
 };
 
 export const fetchOffers = createAsyncThunk<Offer[], undefined, { extra: Extra }>(
@@ -99,6 +100,15 @@ export const loginUser = createAsyncThunk<UserAuth['email'], UserAuth, { extra: 
     history.push(AppRoute.Main);
 
     return email;
+  });
+
+export const logoutUser = createAsyncThunk<void, undefined, { extra: Extra }>(
+  Action.LOGOUT_USER,
+  async (_, { extra }) => {
+    const { api } = extra;
+    await api.delete(ApiRoute.Logout);
+
+    Token.drop();
   });
 
 export const postComment = createAsyncThunk<Comment[], CommentAuth, { extra: Extra }>(

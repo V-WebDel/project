@@ -1,4 +1,5 @@
-import {Link} from 'react-router-dom';
+import { memo } from 'react';
+
 import type { CityName } from '../../types/types';
 
 type CityProps = {
@@ -8,17 +9,17 @@ type CityProps = {
 }
 
 const City = ({ name, isActive, onClick }: CityProps): JSX.Element => {
-  const handleClick = () => {
+  const handleCityClick = () => {
     onClick(name);
   };
 
   return (
-    <li className="locations__item" onClick={handleClick}>
-      <Link className={`locations__item-link tabs__item${isActive ? ' tabs__item--active' : ''}`} to="#">
+    <li className="locations__item">
+      <div className={`locations__item-link tabs__item${isActive ? ' tabs__item--active' : ''}`} onClick={handleCityClick} role="button" tabIndex={0}>
         <span>{name}</span>
-      </Link>
+      </div>
     </li>
   );
 };
 
-export default City;
+export default memo(City);
